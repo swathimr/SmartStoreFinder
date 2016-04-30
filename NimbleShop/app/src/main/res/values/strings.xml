@@ -5,4 +5,6 @@
     <string name="button_text">Login / Sign Up</string>
     <string name="title_activity_landing">LandingActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_search">Map</string>
+    <string name="title_activity_wait_list_prediction">WaitListPredictionActivity</string>
 </resources>

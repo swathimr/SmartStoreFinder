@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:shrinkColumns="*"
+    android:stretchColumns="0,2,3"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/predictionbg"
+    android:id="@+id/table"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sjsu.nimbleshop.WaitListPredictionActivity"
+    tools:showIn="@layout/activity_wait_list_prediction">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textSize="18sp"
+        />
+
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+        <TextView
+            android:text="Shop Name"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="150dip"
+            android:gravity="center"
+            />
+            <!--android:layout_column="1" android:padding="20dip"-->
+        <TextView
+            android:text="Wait time"
+            android:layout_weight="1"
+            android:paddingRight="5dip"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:gravity="center"
+            />
+        <TextView
+            android:text="Travel time"
+            android:layout_weight="1"
+            android:paddingRight="5dip"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:gravity="center"
+            />
+    </TableRow>
+
+    <!--value row1-->
+    <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/r1val1"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_width="150dip"
+            android:gravity="center">
+            </TextView>
+
+        <!--<RatingBar
+            android:id="@+id/ratingBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:rating="0"
+            android:layout_centerHorizontal="true"
+            />-->
+        <!--android:layout_column="1" android:padding="20dip"-->
+        <TextView
+            android:id="@+id/r1val2"
+            android:layout_weight="1"
+            android:paddingRight="5dip"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/r1val3"
+            android:layout_weight="1"
+            android:paddingRight="5dip"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:gravity="center"
+            />
+
+    </TableRow>
+<!--row 2-->
+
+
+</TableLayout>

@@ -12,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -59,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements
 
         //fb login
         // to logout LoginManager.getInstance().logOut();
+
+        System.out.println("logged in :::"+isLoggedIn());
+        if(isLoggedIn())
+        {
+            logout();
+        }
         callbackManager = CallbackManager.Factory.create();
         info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
@@ -75,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements
                                 "Auth Token: "
                                 + loginResult.getAccessToken().getToken()
                 );*/
-                loginButton.setVisibility(View.INVISIBLE); // disable logout button on login
+                //loginButton.setVisibility(View.INVISIBLE); // disable logout button on login
             }
             @Override
             public void onCancel() {
@@ -190,5 +198,15 @@ public class MainActivity extends AppCompatActivity implements
             mGoogleApiClient.disconnect();
             mGoogleApiClient.connect();
         }*/
+    }
+
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
+
+    public void logout()
+    {
+        LoginManager.getInstance().logOut();
     }
 }
