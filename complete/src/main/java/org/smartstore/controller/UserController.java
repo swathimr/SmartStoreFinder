@@ -5,6 +5,7 @@ import org.smartstore.model.User;
 import org.smartstore.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +15,7 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 	
-	@RequestMapping("/user/create")
+	@RequestMapping(value="/user/create", method=RequestMethod.POST)
 	public UserVo create(
 			@RequestParam(value="email") String email,
 			@RequestParam(value="name", defaultValue="World") String name,
