@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 /**
  * Created by SwathiBala on 4/12/16.
+ * Get total travel distance by car from google distance matrix api
  */
 public class DistanceMatrixAsyncTask extends AsyncTask<ArrayList<Double>,Void,String> {
 

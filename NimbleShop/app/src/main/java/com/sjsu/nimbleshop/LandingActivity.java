@@ -62,6 +62,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     private TextView locationTv;
 
     private static LatLngBounds BOUNDS_MOUNTAIN_VIEW;
+    private static int selectedPlace=0;
     private AutocompleteFilter autofilter;
 
     @Override
@@ -122,7 +123,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
         LatLng latLng = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(latLng));
+        mMap.addMarker(new MarkerOptions().position(latLng).title("Your here"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
         locationTv.setText("Latitude:" + latitude + ": Longitude:" + longitude);
@@ -161,6 +162,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
+            selectedPlace=position;
             Log.i(LOG_TAG, "Selected: " + item.description);
             PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
                     .getPlaceById(mGoogleApiClient, placeId);
@@ -230,21 +232,13 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     {
         System.out.println(mPlaceArrayAdapter.mResultList.get(0));
 
-        /*for(int i=0;i<mPlaceArrayAdapter.mResultList.size();i++)
-        {
-            System.out.println("for place id:::"+mPlaceArrayAdapter.mResultList.get(i).placeId);
-            final String placeId = String.valueOf(mPlaceArrayAdapter.mResultList.get(i).placeId);
-            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
-                    .getPlaceById(mGoogleApiClient, placeId);
-            placeResult.setResultCallback(mfetchPlaceDetailsCallback);
-        }*/
-
         Intent intent= new Intent(this,WaitListPredictionActivity.class);
 
         //passing the list directly does not work
         //copied the list and sent the value
-        ArrayList val=copyList();
-        intent.putStringArrayListExtra("working",completeList);
+        //ArrayList val=copyList();
+        intent.putStringArrayListExtra("resultList",completeList);
+        intent.putExtra("SelectedPos",selectedPlace);
         startActivity(intent);
 
     }

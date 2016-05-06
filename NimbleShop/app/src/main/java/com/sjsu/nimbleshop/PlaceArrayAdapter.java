@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
+
+/*
+Donot modify this file
+ */
 public class PlaceArrayAdapter
         extends ArrayAdapter<PlaceArrayAdapter.PlaceAutocomplete> implements Filterable,Serializable {
     private static final String TAG = "PlaceArrayAdapter";

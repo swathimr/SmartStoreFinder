@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/predictionbg"
+    android:background="@drawable/graybg"
     android:id="@+id/table"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.sjsu.nimbleshop.WaitListPredictionActivity"
@@ -43,7 +43,7 @@
         <TextView
             android:text="Wait time"
             android:layout_weight="1"
-            android:paddingRight="5dip"
+            android:paddingRight="3dip"
             android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
@@ -51,7 +51,7 @@
         <TextView
             android:text="Travel time"
             android:layout_weight="1"
-            android:paddingRight="5dip"
+            android:paddingRight="2dip"
             android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"

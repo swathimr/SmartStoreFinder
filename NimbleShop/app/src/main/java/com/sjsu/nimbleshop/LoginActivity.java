@@ -30,10 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
 
-        //String values = intent.getExtras("predictions").;
-        //String lName = intent.getStringExtra("lname");
-
-        //tvView.setText("Your name is: " + fName + " " + lName);
     }
 
 }
