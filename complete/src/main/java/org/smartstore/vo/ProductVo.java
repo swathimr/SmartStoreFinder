@@ -1,53 +1,21 @@
-package org.smartstore.model;
+package org.smartstore.vo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import org.smartstore.model.Order;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@Entity
-@Table(name = "products")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="productId")
-public class Product implements java.io.Serializable {
+public class ProductVo implements java.io.Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long productId;
-
-	@ManyToOne(optional=false)
-	@JoinColumn(name="storeId")
-	private Store store;
-	
-	@NotNull
 	private String productName;
-	
-	@NotNull
 	private String productDesc;
-
-	@NotNull
 	private Double cost;
-	
-	@NotNull
 	private Long quantity;
-	
-	@ManyToOne
-	@JoinColumn(name="orderId")
 	private Order order;
 	
-	public Product(){}
-	
-	public Product( String productName, String productDesc ){
-		this.productName = productName;
-		this.productDesc = productDesc;
-		
-	}
+	public ProductVo(){}
 
 	public long getProductId() {
 		return productId;
@@ -55,14 +23,6 @@ public class Product implements java.io.Serializable {
 
 	public void setProductId(long productId) {
 		this.productId = productId;
-	}
-
-	public Store getStore() {
-		return store;
-	}
-
-	public void setStore(Store store) {
-		this.store = store;
 	}
 
 	public String getProductName() {
@@ -106,5 +66,5 @@ public class Product implements java.io.Serializable {
 	}
 	
 	
-
+	
 }

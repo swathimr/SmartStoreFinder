@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements java.io.Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,6 +30,8 @@ public class Order {
 	@OneToMany(mappedBy="order", targetEntity=Product.class, fetch=FetchType.EAGER)
 	private List<Product> listProducts;
 
+	public Order(){}
+	
 	public long getOrderId() {
 		return orderId;
 	}
