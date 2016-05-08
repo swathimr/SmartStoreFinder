@@ -22,7 +22,7 @@ public class WaitTimeController {
     {
         if(waitTime>=60)
         {
-            return String.valueOf(waitTime)+" min";
+            return String.valueOf(waitTime/60)+" min";
         }
         return String.valueOf(waitTime)+" Sec";
     }
