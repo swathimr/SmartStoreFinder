@@ -7,4 +7,21 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_search">Map</string>
     <string name="title_activity_wait_list_prediction">WaitListPredictionActivity</string>
+    <string name="title_activity_template">TemplateActivity</string>
+    <string name="Groceries">Groceries</string>
+    <string name="Milk">Milk</string>
+    <string name="Eggs">Eggs</string>
+    <string name="Bread">Bread</string>
+    <string name="Chicken">Chicken</string>
+    <string name="Wine">Wine</string>
+    <string name="Whiskey">Whiskey</string>
+    <string name="Beer">Beer</string>
+    <string name="Coffee">Coffee</string>
+
+    <string name="getWaitTimesTemplate">Get Wait Times</string>
+    <string name="navigation">Get Locations</string>
+
+    <string name="title_activity_wait_list_prediction_template">WaitListPredictionTemplateActivity
+    </string>
+
 </resources>

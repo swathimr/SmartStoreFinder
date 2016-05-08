@@ -27,6 +27,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import android.widget.Button;
+import android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
@@ -49,6 +51,20 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Button login  = (Button)findViewById(R.id.reg_login);
+        login.setOnClickListener(new OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                System.out.println("in func");
+                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
+                //intent.putExtra("loginResult",loginResult);
+
+                startActivity(intent);
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +138,8 @@ public class MainActivity extends AppCompatActivity implements
             handleSignInResult(result);
         }
     }
+
+
 
     @Override
     public void onClick(View v) {

@@ -10,7 +10,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/predictionbg"
     android:id="@+id/table"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.sjsu.nimbleshop.WaitListPredictionActivity"
@@ -32,7 +31,7 @@
         android:layout_width="match_parent"
         >
         <TextView
-            android:text="Shop Name"
+            android:text="Store Name"
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -56,6 +55,7 @@
             android:textSize="18sp"
             android:gravity="center"
             />
+
     </TableRow>
 
     <!--value row1-->
@@ -71,6 +71,8 @@
             android:layout_width="150dip"
             android:gravity="center">
             </TextView>
+
+
 
         <!--<RatingBar
             android:id="@+id/ratingBar1"

@@ -249,6 +249,18 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
 
     }
 
+    public void getTemplateActivity(View view)
+    {
+        System.out.println("in Template Activity");
+
+
+        Intent intent= new Intent(this,TemplateActivity.class);
+        //intent.putStringArrayListExtra("working",completeList);
+        startActivity(intent);
+
+    }
+
+
     public ArrayList copyList()
     {
         ArrayList values= new ArrayList();
