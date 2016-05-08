@@ -98,7 +98,7 @@ public class TemplateController {
 						sVo.setAddress(st.getStore().getAddress());
 						sVo.setListIotDevices(st.getStore().getListIotDevices());
 						sVo.setOrder(st.getStore().getOrder());
-						sVo.setListProducts( this.getProductVoList( st.getStore().getListProducts() ));
+						sVo.setListProducts( this.getProductVoList( t.getName(), st.getStore().getListProducts() ));
 						
 						listStoresForStoreVo.add(sVo);
 					}
@@ -126,7 +126,7 @@ public class TemplateController {
 					sVo.setAddress(st.getStore().getAddress());
 					sVo.setListIotDevices(st.getStore().getListIotDevices());
 					sVo.setOrder(st.getStore().getOrder());
-					sVo.setListProducts( this.getProductVoList( st.getStore().getListProducts() ));
+					sVo.setListProducts( this.getProductVoList( t.getName(), st.getStore().getListProducts() ));
 					
 					listStoresForStoreVo.add(sVo);
 				}
@@ -195,7 +195,7 @@ public class TemplateController {
 		return 3961 * c;
 	}
 	
-	private List<ProductVo> getProductVoList( List<Product> list ){
+	private List<ProductVo> getProductVoList( String name, List<Product> list ){
 		
 		List<ProductVo> lst = new ArrayList<>();
 		if( null != list && !list.isEmpty() ){
@@ -208,7 +208,8 @@ public class TemplateController {
 				pVo.setCost(p.getCost());
 				pVo.setQuantity(p.getQuantity());
 				
-				lst.add(pVo);
+				if( name.equalsIgnoreCase( pVo.getProductName() ))
+					lst.add(pVo);
 			}
 		}
 		return lst;
