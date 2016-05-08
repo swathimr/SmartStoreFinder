@@ -123,8 +123,14 @@ public class WaitListPredictionActivity extends AppCompatActivity {
             prodBtn.setText("View More");
             prodBtn.setAllCaps(false);
             prodBtn.setTextColor(getResources().getColor(R.color.darkgreen));
-            //prodBtn.setBackgroundColor(getResources().getColor(R.color.darkgrey));
             prodBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            prodBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(WaitListPredictionActivity.this,ProdrecmndtnActivity.class);
+                    startActivity(intent);
+                }
+            });
 
             Button navBtn = new Button(this);
             navBtn.setText("Start Nav");
