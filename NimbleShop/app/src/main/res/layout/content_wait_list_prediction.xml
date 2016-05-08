@@ -10,6 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/graybg"
     android:id="@+id/table"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.sjsu.nimbleshop.WaitListPredictionActivity"
@@ -72,18 +73,6 @@
             android:gravity="center">
             </TextView>
 
-
-
-        <!--<RatingBar
-            android:id="@+id/ratingBar1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="0"
-            android:layout_centerHorizontal="true"
-            />-->
-        <!--android:layout_column="1" android:padding="20dip"-->
         <TextView
             android:id="@+id/r1val2"
             android:layout_weight="1"

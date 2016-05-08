@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="TransparentGrey">#4F000000</color>
     <color name="green">#c6c539</color>
+    <color name="lightgreen">#a4c639</color>
+    <color name="orange">#e9b44c</color>
+    <color name="darkgrey">#636363</color>
+    <color name="red">#f44336</color>
+    <color name="darkgreen">#006400</color>
 </resources>
