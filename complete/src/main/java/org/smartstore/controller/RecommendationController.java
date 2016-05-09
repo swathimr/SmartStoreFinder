@@ -2,13 +2,11 @@ package org.smartstore.controller;
 import com.beust.jcommander.JCommander;
 import org.json.simple.JSONObject;
 import org.smartstore.helper.RecommendationManager;
-import org.smartstore.model.SearchLocation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -52,8 +50,8 @@ public class RecommendationController {
         //yelpApiCli.location = location;
        // yelpApiCli.term = term;
 
-        System.out.println(loctn);
-        System.out.println(name);
+        //System.out.println(loctn);
+        //System.out.println(name);
         yelpApiCli.location = loctn;
         yelpApiCli.term = name;
 
