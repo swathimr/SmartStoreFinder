@@ -6,6 +6,7 @@ import org.smartstore.model.SearchLocation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -25,8 +26,8 @@ public class RecommendationController {
     private static final String TOKEN_SECRET = "6n6_E8M9lbg7-K8x8gNp1dWUqU0";
 
 
-    @RequestMapping(value = "/searchYelp",produces = "application/json",consumes = "application/json")
-    public ResponseEntity<String> searchAPI(SearchLocation searchLocation)
+    @RequestMapping(value = "/searchYelp",produces = "application/json")
+    public ResponseEntity<String> searchAPI(@RequestParam String name, @RequestParam String loctn)
     {
         RecommendationManager.YelpAPICLI yelpApiCli = new RecommendationManager.YelpAPICLI();
         //String location = "1370 Blossom Hill Road, San Jose, CA 95118";
@@ -51,8 +52,10 @@ public class RecommendationController {
         //yelpApiCli.location = location;
        // yelpApiCli.term = term;
 
-        yelpApiCli.location = searchLocation.getAddress();
-        yelpApiCli.term = searchLocation.getStoreName();
+        System.out.println(loctn);
+        System.out.println(name);
+        yelpApiCli.location = loctn;
+        yelpApiCli.term = name;
 
         new JCommander(yelpApiCli);
         RecommendationManager yelpApi = new RecommendationManager(CONSUMER_KEY, CONSUMER_SECRET, TOKEN, TOKEN_SECRET);
