@@ -17,9 +17,9 @@ public class UserController {
 	
 	@RequestMapping(value="/user/create", method=RequestMethod.POST)
 	public UserVo create(
-			@RequestParam(value="email") String email,
-			@RequestParam(value="name", defaultValue="World") String name,
-			@RequestParam(value="password", defaultValue="World") String password) {
+			@RequestParam(value="email", required=true) String email,
+			@RequestParam(value="name") String name,
+			@RequestParam(value="password", required=true) String password) {
 		
 		User user = null;
 		UserVo userVo = null;

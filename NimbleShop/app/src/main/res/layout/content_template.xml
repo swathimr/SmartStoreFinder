@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sjsu.nimbleshop.TemplateActivity"
+    tools:showIn="@layout/activity_template">
+    <TextView
+        android:text="Please select your items"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    <TextView
+        android:text="Groceries"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical" >
+
+
+
+
+        <CheckBox
+            android:id="@+id/Bread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Bread" />
+        <CheckBox
+            android:id="@+id/Eggs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Eggs" />
+        <CheckBox
+            android:id="@+id/Chicken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Chicken" />
+        <CheckBox
+            android:id="@+id/Milk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Milk" />
+    </LinearLayout>
+    <TextView
+        android:text="Alcohol"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="200dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="230dp"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/Wine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Wine"
+             />
+
+        <CheckBox
+            android:id="@+id/Whiskey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Whiskey" />
+
+        <CheckBox
+            android:id="@+id/Beer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Beer" />
+    </LinearLayout>
+    <TextView
+        android:text="Hot Beverages"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="340dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="370dp"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/Coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Coffee"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/getWaitTimesTemplate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minWidth="150dp"
+        android:layout_marginTop="410dp"
+        android:layout_below="@+id/autoCompleteTextView"
+        android:text="Get Wait Times"
+        android:background = "@drawable/roundedbutton"
+        android:onClick="getWaitTimes" />
+
+
+
+
+
+</RelativeLayout>

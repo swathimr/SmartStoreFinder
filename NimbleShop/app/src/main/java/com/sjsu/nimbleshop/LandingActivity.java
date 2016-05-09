@@ -232,16 +232,37 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     {
         System.out.println(mPlaceArrayAdapter.mResultList.get(0));
 
+        /*for(int i=0;i<mPlaceArrayAdapter.mResultList.size();i++)
+        {
+            System.out.println("for place id:::"+mPlaceArrayAdapter.mResultList.get(i).placeId);
+            final String placeId = String.valueOf(mPlaceArrayAdapter.mResultList.get(i).placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mfetchPlaceDetailsCallback);
+        }*/
+
         Intent intent= new Intent(this,WaitListPredictionActivity.class);
 
         //passing the list directly does not work
         //copied the list and sent the value
-        //ArrayList val=copyList();
+        ArrayList val=copyList();
         intent.putStringArrayListExtra("resultList",completeList);
         intent.putExtra("SelectedPos",selectedPlace);
         startActivity(intent);
 
     }
+
+    public void getTemplateActivity(View view)
+    {
+        System.out.println("in Template Activity");
+
+
+        Intent intent= new Intent(this,TemplateActivity.class);
+        //intent.putStringArrayListExtra("working",completeList);
+        startActivity(intent);
+
+    }
+
 
     public ArrayList copyList()
     {

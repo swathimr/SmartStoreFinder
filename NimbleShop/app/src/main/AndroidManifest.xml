@@ -89,6 +89,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.sjsu.nimbleshop.MainActivity" />
         </activity>
+        <activity
+            android:name=".TemplateActivity"
+            android:label="@string/title_activity_template"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".WaitListPredictionTemplateActivity"
+            android:label="@string/title_activity_wait_list_prediction_template"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

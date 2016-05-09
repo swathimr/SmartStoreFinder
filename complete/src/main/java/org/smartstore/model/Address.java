@@ -9,17 +9,17 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address implements java.io.Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long addressId;
 
 	@NotNull
-	private Long latitude;
+	private Double latitude;
 	
 	@NotNull
-	private Long longitude;
+	private Double longitude;
 	
 	private String streetName;
 	private String city;
@@ -27,7 +27,9 @@ public class Address {
 	private String country;
 	private String zipCode;
 
-	public Address( Long latitude, Long longitude ){
+	public Address(){}
+	
+	public Address( Double latitude, Double longitude ){
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -40,19 +42,19 @@ public class Address {
 		this.addressId = addressId;
 	}
 
-	public Long getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Long latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public Long getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Long longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 

@@ -12,6 +12,9 @@ import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.oauth.OAuthService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 /**
  * Code for accessing the Yelp API V2.
  *
@@ -156,7 +159,6 @@ public class RecommendationManager {
                 System.out.println("Matched: " + d);
                 businessID = obj.get("id").toString();
                 break;
-                //System.out.println(obj.get("deals").toString());
             }
 
         }
@@ -175,10 +177,20 @@ public class RecommendationManager {
             response1 = (JSONObject) parser.parse(businessResponseJSON);
 
             result.put("Rating",response1.get("rating").toString());
-            result.put("People said:",response1.get("snippet_text").toString());
+            String review_text = response1.get("snippet_text").toString();
+            String reviewText[] = review_text.split("\n");
+            String review = "";
+
+            for(int i =0;i<reviewText.length;i++)
+            {
+                review+= reviewText[i];
+            }
+            System.out.println("Review:" + review);
+
+            result.put("Review:", review);
             result.put("Visit at:",response1.get("mobile_url").toString());
             result.put("View Photo at:",response1.get("image_url").toString());
-            result.put("Number of people reviewed are:", response1.get("review_count").toString());
+            result.put("Number of reviews:", response1.get("review_count").toString());
 
 
             System.out.println("Rating:"+ response1.get("rating").toString());
@@ -186,6 +198,19 @@ public class RecommendationManager {
             System.out.println("View Photo at:" + response1.get("image_url").toString());
             System.out.println("People said...:" + response1.get("snippet_text").toString());
 
+            JSONArray categories = (JSONArray)response1.get("categories");
+            int length_categories = categories.size();
+            ArrayList typeOfFood = new ArrayList();
+            String keyTerms = "";
+            for (int i = 0; i < length_categories; i++) {
+
+                keyTerms+= categories.get(i).toString();
+                typeOfFood.add(categories.get(i).toString());
+                System.out.println(categories.get(i).toString());
+            }
+
+            HashSet<String> keyTermsSet = parseFoodTypes(keyTerms);
+            result.put("Food Type:",keyTermsSet);
 
             if(response1.get("reviews")!=null)
             {
@@ -205,12 +230,23 @@ public class RecommendationManager {
                     int length_deals = deals.size();
                     for (int i = 0; i < length_deals; i++) {
                         JSONObject obj = (JSONObject)deals.get(i);
-                        result.put("Available DEAL is..: ",obj.get("what_you_get").toString());
+                        String dealText[] = obj.get("what_you_get").toString().split("\n");
+                        String deal = "";
+                        for(int k =0;k < dealText.length;k++)
+                        {
+                            for(int j = 0;j<dealText[k].length();j++) {
+                                if (dealText[k].charAt(j) == '<')
+                                    break;
+                                deal += dealText[k].charAt(j);
+                            }
+                        }
+                        deal += "with the given link";
+                        result.put("Available DEAL: ",deal);
+                        result.put("DEAL Details:",obj.get("url").toString());
                         System.out.println(deals.get(i).toString());
                     }
                 }
             }
-
 
         } catch (ParseException pe) {
             System.out.println("Error: could not parse JSON response:");
@@ -232,5 +268,56 @@ public class RecommendationManager {
         public String location;
 
         public String getDeals = "false";
+    }
+
+    /* For Retrieving unique food types available*/
+
+    public static HashSet<String> parseFoodTypes(String s)
+    {
+        HashSet<String> resultSet = new HashSet<String>();
+
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+
+        ArrayList<String> lines = new ArrayList<String>();
+
+        for(int i =0;i<s.length();i++)
+        {
+            String l = "";
+            if(s.charAt(i)=='[')
+            {
+                i = i+1;
+                while(s.charAt(i) != ']') {
+                    l = l + s.charAt(i);
+                    i++;
+                }
+                lines.add(l);
+                System.out.println(l);
+                System.out.println("SIZE OF LINES:"+ lines.size());
+            }
+        }
+
+        if(lines.size() >= 1)
+        {
+            for(String line:lines) {
+                String[] terms = line.split(",");
+                if(terms.length >= 1)
+                {
+                    for(int j = 1;j<terms.length;j= j+2)
+                    {
+                        if(!resultSet.contains(terms[j]))
+                            resultSet.add(terms[j].toLowerCase());
+
+                        System.out.println(terms[j].toLowerCase());
+                    }
+                }
+            }
+        }
+
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        System.out.println(resultSet.size());
+        for(String keyTerms:resultSet)
+         System.out.println(keyTerms);
+
+        return resultSet;
     }
 }

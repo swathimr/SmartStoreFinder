@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "iotdevices")
-public class IotDevice {
+public class IotDevice implements java.io.Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +28,7 @@ public class IotDevice {
 	
 	private Long time;
 
+	public IotDevice(){}
 	
 	public IotDevice( Store store ){
 		this.store = store;

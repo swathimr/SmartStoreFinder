@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements java.io.Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +34,8 @@ public class User {
 	private List<Order> listOrders;
 	
 
+	public User(){}
+	
 	public User( String email, String name, String password){
 		this.email = email;
 		this.name = name;
