@@ -13,18 +13,18 @@ public class TemplateVo implements java.io.Serializable {
 //		return new Gson().toJson(this);
 //	}
 
-	private long templateId;
+	private int templateId;
 	private String name;
 	private List<StoreVo> stores;
 
 	public TemplateVo() {
 	}
 
-	public long getTemplateId() {
+	public int getTemplateId() {
 		return templateId;
 	}
 
-	public void setTemplateId(long templateId) {
+	public void setTemplateId(int templateId) {
 		this.templateId = templateId;
 	}
 
