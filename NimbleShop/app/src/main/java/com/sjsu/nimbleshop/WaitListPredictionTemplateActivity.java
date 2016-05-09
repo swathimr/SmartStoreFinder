@@ -13,6 +13,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
@@ -33,7 +36,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WaitListPredictionTemplateActivity extends AppCompatActivity {
     ArrayList<Integer> list = new ArrayList<>();
@@ -44,9 +50,14 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
     private GoogleApiClient client;
 
 
+    Map<Integer, StoreVo> mapStores = new HashMap<>();
+    List<Integer> listStores = new ArrayList<Integer>();
+    Map<Integer, List<RadioButton>> mapGroupRadio = new LinkedHashMap<>();
+
     public void initTable( List<TemplateVo> listTemplate ){
 
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableTemplate);
+
 
         for (int i = 0; i < listTemplate.size(); i++) {
 
@@ -61,16 +72,46 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                 tableLayout.addView(tbrow);
                 //hh
                 boolean isNa = false;
+
+                mapGroupRadio.put( templateVo.getTemplateId(), new ArrayList<RadioButton>() );
+
+
                 for(StoreVo storeVo : templateVo.getStores() ){
 
                     if( null != storeVo.getListProducts() && !storeVo.getListProducts().isEmpty() ){
 
                         TableRow tbr = new TableRow(this);
 
-//                        tv0 = (TextView) findViewById(R.id.storeNameD);
-//                        tv0.setText( String.valueOf(storeVo.getStoreId()) );
-//                        tv0.setTextColor(Color.BLACK);
-//                        tbr.addView(tv0);
+                        RadioButton rd = new RadioButton(this);
+                        StringBuffer sb = new StringBuffer( "" );
+                        sb.append(templateVo.getTemplateId() );
+                        sb.append("00");
+                        sb.append( storeVo.getStoreId() );
+                        rd.setId( Integer.parseInt(sb.toString()) );
+
+                        mapGroupRadio.get( templateVo.getTemplateId() ).add( rd );
+
+
+
+                        rd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                RadioButton rb = (RadioButton) v;
+                                int wholeId = rb.getId();
+                                String sTempId = String.valueOf(wholeId).substring( 0, String.valueOf(wholeId).lastIndexOf("00") );
+                                int tempId = Integer.parseInt(sTempId);
+
+                                for( RadioButton rdb : mapGroupRadio.get(tempId) ){
+                                    if(wholeId == rdb.getId())
+                                        rdb.setChecked(true);
+                                    else
+                                        rdb.setChecked(false);
+
+                                }
+                            }
+                        });
+
+                        tbr.addView(rd);
 
                         TextView tv1 = new TextView(this);
                         tv1.setText( storeVo.getStoreName() );
@@ -103,6 +144,7 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                         isNa = true;
                     }
                 }
+
                 if( isNa ){
                     TableRow tbr = new TableRow(this);
                     TextView tv0 = new TextView(this);
@@ -115,11 +157,46 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                     tableLayout.addView(tbr);
                 }
 
+                //tableLayout.addView(rdg);
             }
+
 
 
         }
 
+
+        Button navBtn= new Button(this);
+        navBtn.setText("Continue");
+        //navBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        navBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for( Map.Entry<Integer, List<RadioButton>> entry : mapGroupRadio.entrySet() ){
+
+                    int templateId = entry.getKey();
+                    int storeId = 0;
+                    for( RadioButton rb : entry.getValue() ){
+                        if( rb.isChecked() ){
+                            storeId = Integer.parseInt( String.valueOf(rb.getId()).substring( String.valueOf(rb.getId()).lastIndexOf("00") ) );
+                            //storeId = rb.getId()%10;
+                            listStores.add(storeId);
+                            System.out.println(" Chosen store  : " + templateId +  " -- " + storeId );
+                            break;
+                        }
+
+                    }
+                }
+
+                System.out.println("----------------------------------------");
+                System.out.println("Addresses to go to.");
+                for( Integer i : listStores ){
+                    System.out.println(  mapStores.get(i).getAddress().getLatitude() + "," + mapStores.get(i).getAddress().getLongitude()  );
+                }
+            }
+        });
+
+        tableLayout.addView(navBtn);
     }
 
     @Override
@@ -136,6 +213,14 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
             Log.d("My App", obj.toString());
 
             listTemplate = new Gson().fromJson(response, new TypeToken<List<TemplateVo>>(){}.getType());
+
+            for( TemplateVo t : listTemplate ){
+                if( null != t.getStores() ){
+                    for( StoreVo storeVo : t.getStores() ){
+                        mapStores.put( storeVo.getStoreId(), storeVo );
+                    }
+                }
+            }
             System.out.println( " Kandarp " + listTemplate.size() ) ;
 
         } catch (Throwable t) {
@@ -144,104 +229,6 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
         // Populating tables
         initTable( listTemplate );
-
-
-        /*
-
-
-        String row = "1";
-        String val = "1";
-        try {
-            //for (int i = 0; i <3; i++) {
-            //RadioGroup group = new RadioGroup(this);
-           // group.setOrientation(RadioGroup.HORIZONTAL);
-//            RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(
-//                    RadioGroup.LayoutParams.WRAP_CONTENT,
-//                    RadioGroup.LayoutParams.WRAP_CONTENT);
-
-
-            for (int i = 0; i < obj.getJSONObject(0).getJSONArray("stores").length(); i++) {
-
-                TableRow tr = new TableRow(this);
-                tr.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
-                //RadioButton btn1 = new RadioButton(this);
-                //btn1.setText("BTN1");
-                //group.addView(btn1,layoutParams);
-                TextView tx1 = new TextView(this);
-                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150, getResources().getDisplayMetrics());
-                tx1.append(obj.getJSONObject(0).getJSONArray("stores").getJSONObject(i).getString("storeName") + "\n");
-                //tx1.append("dsf" + "\n");
-                tx1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                tx1.setTypeface(Typeface.DEFAULT_BOLD);
-                tx1.setWidth(width);
-                TableRow.LayoutParams lparams = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-                tx1.setLayoutParams(lparams);
-                tx1.setGravity(Gravity.CENTER);
-                tx1.setId(Integer.valueOf(row + val));
-                System.out.println(Integer.valueOf(row + val));
-
-                TextView tx2=new TextView(this);
-                tx2.setText("5 min");
-                tx2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                tx2.setTypeface(Typeface.DEFAULT_BOLD);
-                int value =(int)(3 * getResources().getDisplayMetrics().density);
-                tx2.setPadding(0, 0, value, 0);
-                tx2.setLayoutParams(lparams);
-                tx2.setGravity(Gravity.CENTER);
-                tx2.setId(Integer.valueOf(row + val));
-
-
-                    TextView tx3=new TextView(this);
-                    tx3.setText("10 min");
-                    tx3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                    tx3.setTypeface(Typeface.DEFAULT_BOLD);
-                    int value1 =(int)(3 * getResources().getDisplayMetrics().density);
-                    tx3.setPadding(0, 0, value1, 0);
-                    tx3.setLayoutParams(lparams);
-                    tx3.setGravity(Gravity.CENTER);
-                    tx3.setId(Integer.valueOf(row + val));
-
-                    TextView tx4=new TextView(this);
-                    tx4.setText("3$");
-                    tx4.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                    tx4.setTypeface(Typeface.DEFAULT_BOLD);
-                    int value2 =(int)(3 * getResources().getDisplayMetrics().density);
-                    tx4.setPadding(0, 0, value2, 0);
-                    tx4.setLayoutParams(lparams);
-                    tx4.setGravity(Gravity.CENTER);
-                    tx4.setId(Integer.valueOf(row + val));
-
-                    TextView tx5=new TextView(this);
-                    tx5.setText("20");
-                    tx5.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                    tx5.setTypeface(Typeface.DEFAULT_BOLD);
-                    int value3 =(int)(3 * getResources().getDisplayMetrics().density);
-                    tx5.setPadding(0, 0, value3, 0);
-                    tx5.setLayoutParams(lparams);
-                    tx5.setGravity(Gravity.CENTER);
-                    tx5.setId(Integer.valueOf(row + val));
-
-
-                View v = new View(this);
-                v.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, 1));
-                v.setBackgroundColor(Color.rgb(51, 51, 51));
-
-                //tr.addView(group);
-                tr.addView(tx1);
-                tr.addView(tx2);
-                tr.addView(tx3);
-                    tr.addView(tx4);
-                    tr.addView(tx5);
-                   // t.addView(group);
-                    t.addView(tr);
-                t.addView(v);
-
-            }
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
 
     }
 

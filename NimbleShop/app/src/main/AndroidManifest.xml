@@ -96,7 +96,16 @@
         <activity
             android:name=".WaitListPredictionTemplateActivity"
             android:label="@string/title_activity_wait_list_prediction_template"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProdrecmndtnActivity"
+            android:label="@string/title_activity_prodrecmndtn"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sjsu.nimbleshop.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

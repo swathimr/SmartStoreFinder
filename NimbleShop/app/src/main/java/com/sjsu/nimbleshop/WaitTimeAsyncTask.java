@@ -27,6 +27,7 @@ public class WaitTimeAsyncTask extends AsyncTask<Void,Void,String> {
             String urlVal= Utils.getProperty("getWaitTime", myctx);
             URL url = new URL(urlVal);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
             int ResponseCode=urlConnection.getResponseCode();
             System.out.println("Response code is::::::::::"+ResponseCode);
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));

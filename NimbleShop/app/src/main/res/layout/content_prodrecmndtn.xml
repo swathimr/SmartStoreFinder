@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sjsu.nimbleshop.ProdrecmndtnActivity"
+    tools:showIn="@layout/activity_prodrecmndtn">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/com_facebook_blue"
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:text="Prod Recommendation and Deals"
+        android:textStyle="bold"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_below="@+id/title"
+        android:shrinkColumns="*"
+        android:stretchColumns="2"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <!--row 1-->
+        <TableRow
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:text="Name "
+            android:layout_column="1"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingRight="5dip"
+            android:padding="3dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/shopNameID"
+            android:paddingLeft="5dip"
+            android:text="Some Stupid Shop"
+            android:textSize="16sp"
+            android:layout_column="2"
+            android:padding="3dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_weight="1"
+                android:background="@color/TransparentGrey"
+                android:padding="4dip" />
+        </TableRow>
+        <!--row 2-->
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:text="Address"
+                android:layout_column="1"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingRight="5dip"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/shopAddressID"
+                android:paddingLeft="5dip"
+                android:text="1370 Blossom Hill Road, San Jose, CA 95118"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:layout_width="140dip"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_weight="1"
+                android:background="@color/TransparentGrey"
+                android:padding="3dip"/>
+        </TableRow>
+        <!--row 3-->
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:text="Products \n Deals"
+                android:layout_column="1"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingRight="5dip"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/ProdRecoID"
+                android:paddingLeft="5dip"
+                android:text="Burritos , Chips \n You get a voucher redeemable for $20 at Mango's Taqueria and Cantina. Print out your voucher, or redeem on your phone with the Yelp app."
+                android:textSize="18sp"
+                android:layout_width="150dip"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_weight="1"
+                android:background="@color/TransparentGrey"
+                android:padding="3dip" />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:text="Rating"
+                android:layout_column="1"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingRight="5dip"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:isIndicator="false"
+            android:stepSize="1.0"
+            android:rating="2.0"
+            android:scaleX="0.7"
+            android:scaleY="0.7"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_weight="1"
+                android:background="@color/TransparentGrey"
+                 />
+        </TableRow>
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:text="Reviews"
+                android:layout_column="1"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingRight="5dip"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/ProdReviewID"
+                android:paddingLeft="5dip"
+                android:text="Came here after 'Stangin' up the Bay with the SO and some friends. After quite a long day of showing off our cars along the SF Pier, we were looking for"
+                android:textSize="18sp"
+                android:layout_width="140dip"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:singleLine="false"
+                android:padding="5dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+        <!--view more link row-->
+        <TableRow
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:text="View More"
+            android:layout_column="1"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingRight="5dip"
+            android:padding="5dp"
+            android:layout_width="70dip"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

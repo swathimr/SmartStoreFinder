@@ -9,7 +9,7 @@ import java.util.List;
 public class StoreVo implements java.io.Serializable{
 
 	
-	private long storeId;
+	private int storeId;
 	private String storeName;
 	private String storeDesc;
 	private Address address;
@@ -19,11 +19,11 @@ public class StoreVo implements java.io.Serializable{
 	
 	public StoreVo(){}
 
-	public long getStoreId() {
+	public int getStoreId() {
 		return storeId;
 	}
 
-	public void setStoreId(long storeId) {
+	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
 

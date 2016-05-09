@@ -20,6 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         >
+
+
         <TextView
             android:text="Store Name"
             android:layout_weight="1"
