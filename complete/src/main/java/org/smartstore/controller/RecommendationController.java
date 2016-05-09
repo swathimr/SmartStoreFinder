@@ -2,7 +2,6 @@ package org.smartstore.controller;
 import com.beust.jcommander.JCommander;
 import org.json.simple.JSONObject;
 import org.smartstore.helper.RecommendationManager;
-import org.smartstore.model.SearchLocation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
