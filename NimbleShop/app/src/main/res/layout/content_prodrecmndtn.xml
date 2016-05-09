@@ -217,21 +217,20 @@
         </TableRow>
 
         <!--view more link row-->
-        <TableRow
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+
 
         <TextView
             android:id="@+id/textView6"
             android:text="View More"
-            android:layout_column="1"
-            android:textStyle="bold"
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:textStyle="italic"
             android:textSize="18sp"
             android:paddingRight="5dip"
             android:padding="5dp"
-            android:layout_width="70dip"
+
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        </TableRow>
+
 
     </TableLayout>
 

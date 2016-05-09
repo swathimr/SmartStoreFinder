@@ -128,6 +128,8 @@ public class WaitListPredictionActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(WaitListPredictionActivity.this,ProdrecmndtnActivity.class);
+                    intent.putExtra("shopname",listValue.get(0).toString());
+                    intent.putExtra("address",listValue.get(1).toString());
                     startActivity(intent);
                 }
             });

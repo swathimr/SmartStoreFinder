@@ -46,8 +46,8 @@ public class RecommendationController {
         //String term = "pizza";
         //String location = "757 Beach St, Russian Hill, San Francisco, CA 94109";
 
-         //String term = "Amor cafe and tea";
-         //String location = "110 E San Fernando St, San Jose, CA 95112";
+         String term1 = "Amor cafe and tea";
+         String location1 = "110 E San Fernando St, San Jose, CA 95112";
 
         //yelpApiCli.location = location;
        // yelpApiCli.term = term;

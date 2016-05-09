@@ -154,7 +154,7 @@ public class RecommendationManager {
             JSONObject address = (JSONObject) obj.get("location");
             String d = address.get("display_address").toString();
 
-            if(d.contains(parts[0]) && d.contains(parts[parts.length-1]))
+            if(d.contains(parts[0]) && d.contains(parts[parts.length-2]))
             {
                 System.out.println("Matched: " + d);
                 businessID = obj.get("id").toString();
