@@ -56,7 +56,7 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
                 shopName.setText(shopNameVal);
                 address.setText(addressVal);
                 String hs=result.get(0).replace("[", "").replace(']', ' ');
-                product.setText(hs+"\n"+result.get(1));
+                product.setText(hs + "\n" + result.get(1));
                 //rating.setLayoutParams(new TableRow.LayoutParams(50, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                 rating.setNumStars(5);
                 rating.setMax(5);
