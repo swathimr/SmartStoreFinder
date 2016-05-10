@@ -21,6 +21,7 @@ public class StoreVo implements java.io.Serializable{
 	private List<ProductVo> listProducts;
 	private List<IotDevice> listIotDevices;
 	private Order order;
+	private Long travelTime;
 	
 	public StoreVo(){}
 
@@ -78,6 +79,14 @@ public class StoreVo implements java.io.Serializable{
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Long getTravelTime() {
+		return travelTime;
+	}
+
+	public void setTravelTime(Long travelTime) {
+		this.travelTime = travelTime;
 	}
 	
 	
