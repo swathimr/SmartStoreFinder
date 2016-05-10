@@ -12,7 +12,7 @@
     tools:context="com.sjsu.nimbleshop.TemplateActivity"
     tools:showIn="@layout/activity_template">
     <TextView
-        android:text="Please select your items"
+        android:text="Select items:"
         android:layout_weight="1"
         android:textStyle="bold"
         android:textSize="18sp"
@@ -122,7 +122,7 @@
         android:minWidth="150dp"
         android:layout_marginTop="410dp"
         android:layout_below="@+id/autoCompleteTextView"
-        android:text="Get Wait Times"
+        android:text="Search"
         android:background = "@drawable/roundedbutton"
         android:onClick="getWaitTimes" />
 
