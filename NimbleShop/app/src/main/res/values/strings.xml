@@ -24,5 +24,7 @@
     <string name="title_activity_wait_list_prediction_template">WaitListPredictionTemplateActivity
     </string>
     <string name="title_activity_prodrecmndtn">ProdrecmndtnActivity</string>
+    <string name="title_activity_location_marker">locationMarker</string>
+    <string name="title_activity_location_template">LocationTemplate</string>
 
 </resources>
