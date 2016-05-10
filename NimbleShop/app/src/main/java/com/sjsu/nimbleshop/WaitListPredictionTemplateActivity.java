@@ -39,8 +39,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
@@ -54,7 +56,7 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
 
     Map<Integer, StoreVo> mapStores = new HashMap<>();
-    List<Integer> listStores = new ArrayList<Integer>();
+    Set<Integer> listStores = null;
     Map<Integer, List<RadioButton>> mapGroupRadio = new LinkedHashMap<>();
 
     // To display  table
@@ -230,7 +232,7 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
         navBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                listStores = new LinkedHashSet<Integer>();
                 for (Map.Entry<Integer, List<RadioButton>> entry : mapGroupRadio.entrySet()) {
 
                     int templateId = entry.getKey();

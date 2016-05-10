@@ -1,5 +1,6 @@
 package com.sjsu.nimbleshop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -70,7 +72,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         info = (TextView)findViewById(R.id.info);
-        info.setText("Loggedin successfully");
+        //info.setText("Loggedin successfully");
 
         //gets current location
         getCurrentLocation();
@@ -160,6 +162,8 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
             selectedPlace=position;
@@ -178,6 +182,9 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
                         .getPlaceById(mGoogleApiClient, placeIdVal);
                 placeResults.setResultCallback(mfetchPlaceDetailsCallback);
             }
+
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     };
 
@@ -201,6 +208,9 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             if (attributions != null) {
                 mAttTextView.setText(Html.fromHtml(attributions.toString()));
             }
+
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(mAttTextView.getWindowToken(), 0);
         }
     };
 
