@@ -57,12 +57,9 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
                 address.setText(addressVal);
                 String hs=result.get(0).replace("[", "").replace(']', ' ');
                 product.setText(hs + "\n" + result.get(1));
-                //rating.setLayoutParams(new TableRow.LayoutParams(50, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                 rating.setNumStars(5);
                 rating.setMax(5);
                 rating.setStepSize(1);
-
-                //rating.setPadding(0, 50, 100, 0);
                 rating.setRating(Float.valueOf(result.get(2)));
                 reviews.setText(result.get(3));
                 viewMoreLink.setText("View More At : "+result.get(4));
