@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -42,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 
 public class WaitListPredictionTemplateActivity extends AppCompatActivity {
+
+
     ArrayList<Integer> list = new ArrayList<>();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -54,7 +57,8 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
     List<Integer> listStores = new ArrayList<Integer>();
     Map<Integer, List<RadioButton>> mapGroupRadio = new LinkedHashMap<>();
 
-    public void initTable( List<TemplateVo> listTemplate ){
+    // To display  table
+    public void initTable(List<TemplateVo> listTemplate) {
 
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableTemplate);
 
@@ -62,35 +66,59 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
         for (int i = 0; i < listTemplate.size(); i++) {
 
             TemplateVo templateVo = listTemplate.get(i);
-            System.out.println( "Name " + templateVo.getName() );
-            if( null != templateVo.getStores() && !templateVo.getStores().isEmpty() ){
+            System.out.println("Name " + templateVo.getName());
+
+            TableRow emptyRow = new TableRow(this);
+            emptyRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+            TableRow.LayoutParams params = (TableRow.LayoutParams) emptyRow.getLayoutParams();
+            params.span = 4;
+            TextView tv = new TextView(this);
+            tv.setText(null);
+            tv.setLayoutParams(params); // causes layout update
+            emptyRow.addView(tv);
+            tableLayout.addView(emptyRow);
+
+            if (null != templateVo.getStores() && !templateVo.getStores().isEmpty()) {
 
                 TableRow tbrow = new TableRow(this);
-                TextView tv =  new TextView(this);
-                tv.setText( templateVo.getName() );
+                tbrow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                tv = new TextView(this);
+                tv.setText(templateVo.getName());
+                tv.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+
+                params = (TableRow.LayoutParams) tbrow.getLayoutParams();
+                params.span = 4;
+                tv.setLayoutParams(params); // causes layout update
+
                 tbrow.addView(tv);
                 tableLayout.addView(tbrow);
+
                 //hh
                 boolean isNa = false;
+                mapGroupRadio.put(templateVo.getTemplateId(), new ArrayList<RadioButton>());
 
-                mapGroupRadio.put( templateVo.getTemplateId(), new ArrayList<RadioButton>() );
 
+                for (StoreVo storeVo : templateVo.getStores()) {
 
-                for(StoreVo storeVo : templateVo.getStores() ){
-
-                    if( null != storeVo.getListProducts() && !storeVo.getListProducts().isEmpty() ){
+                    if (null != storeVo.getListProducts() && !storeVo.getListProducts().isEmpty()) {
 
                         TableRow tbr = new TableRow(this);
+                        tbr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                        // Radio button
 
                         RadioButton rd = new RadioButton(this);
-                        StringBuffer sb = new StringBuffer( "" );
-                        sb.append(templateVo.getTemplateId() );
+                        StringBuffer sb = new StringBuffer("");
+                        sb.append(templateVo.getTemplateId());
                         sb.append("00");
-                        sb.append( storeVo.getStoreId() );
-                        rd.setId( Integer.parseInt(sb.toString()) );
+                        sb.append(storeVo.getStoreId());
+                        rd.setId(Integer.parseInt(sb.toString()));
+                        rd.setGravity(View.TEXT_ALIGNMENT_INHERIT);
+                        rd.setWidth(10);
 
-                        mapGroupRadio.get( templateVo.getTemplateId() ).add( rd );
-
+                        mapGroupRadio.get(templateVo.getTemplateId()).add(rd);
 
 
                         rd.setOnClickListener(new View.OnClickListener() {
@@ -98,11 +126,11 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 RadioButton rb = (RadioButton) v;
                                 int wholeId = rb.getId();
-                                String sTempId = String.valueOf(wholeId).substring( 0, String.valueOf(wholeId).lastIndexOf("00") );
+                                String sTempId = String.valueOf(wholeId).substring(0, String.valueOf(wholeId).lastIndexOf("00"));
                                 int tempId = Integer.parseInt(sTempId);
 
-                                for( RadioButton rdb : mapGroupRadio.get(tempId) ){
-                                    if(wholeId == rdb.getId())
+                                for (RadioButton rdb : mapGroupRadio.get(tempId)) {
+                                    if (wholeId == rdb.getId())
                                         rdb.setChecked(true);
                                     else
                                         rdb.setChecked(false);
@@ -113,47 +141,78 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
                         tbr.addView(rd);
 
+                        //Store Name
                         TextView tv1 = new TextView(this);
-                        tv1.setText( storeVo.getStoreName() );
-                        //tv1.setTextColor(Color.BLACK);
+                        tv1.setText(storeVo.getStoreName().trim());
+                        tv1.setTextAppearance(this, android.R.style.TextAppearance);
+                        tv1.setTextSize(15);
+                        tv1.setGravity(View.TEXT_ALIGNMENT_TEXT_END);
+                        //tv1.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
                         tbr.addView(tv1);
 
                         TextView tv4 = new TextView(this);
                         tv4.setText(" Wait time ");
-                        //tv4.setTextColor(Color.BLACK);
                         tbr.addView(tv4);
 
+                        // Total time
                         TextView tv5 = new TextView(this);
-                        tv5.setText(" Total time ");
-                        //tv5.setTextColor(Color.BLACK);
+                        Long totalTime = (storeVo.getTravelTime()/60);
+                        String totalTimeValue =  totalTime == 1 ? totalTime.toString()+" min" : totalTime.toString()+ " mins";
+                        tv5.setText( totalTimeValue );
                         tbr.addView(tv5);
 
-                        TextView tv2 = new TextView(this);
-                        tv2.setText( String.valueOf( storeVo.getListProducts().get(0).getCost()) );
-                        //tv2.setTextColor(Color.BLACK);
-                        tbr.addView(tv2);
-
-                        TextView tv3 = new TextView(this);
-                        tv3.setText( String.valueOf(storeVo.getListProducts().get(0).getQuantity()) );
-                        //tv3.setTextColor(Color.BLACK);
-                        tbr.addView(tv3);
 
                         tableLayout.addView(tbr);
-                    }
-                    else{
+
+
+                        TableRow tbrCost = new TableRow(this);
+                        tbrCost.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                        TextView tvE1 = new TextView(this);
+                        tvE1.setText(null);
+                        tbrCost.addView(tvE1);
+
+                        TextView tv2 = new TextView(this);
+                        tv2.setText("Cost: $" + String.valueOf(storeVo.getListProducts().get(0).getCost()));
+                        tbrCost.addView(tv2);
+
+                        //tbrCost.setBackgroundResource(R.drawable.bluebg);
+
+                        tableLayout.addView(tbrCost);
+
+                        TableRow tbrQty = new TableRow(this);
+                        tbrQty.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+                        TextView tvEmptyQty = new TextView(this);
+                        tvEmptyQty.setText("");
+                        tbrQty.addView(tvEmptyQty);
+
+                        TextView tv3 = new TextView(this);
+                        tv3.setText("Qty: " + String.valueOf(storeVo.getListProducts().get(0).getQuantity()));
+                        tbrQty.addView(tv3);
+
+                        tableLayout.addView(tbrQty);
+
                         isNa = true;
+
+
                     }
                 }
 
-                if( isNa ){
+                if (!isNa) {
                     TableRow tbr = new TableRow(this);
+                    tbr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+
                     TextView tv0 = new TextView(this);
-                    tv0.setText( "NA" );
-                    //tv0.setTextColor(Color.BLACK);
-                    //tv0.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+                    tv0.setText("Not Available in any store.");
+
+                    params = (TableRow.LayoutParams) tbr.getLayoutParams();
+                    params.span = 4;
+                    tv0.setLayoutParams(params); // causes layout update
+
+
                     tbr.addView(tv0);
-
-
                     tableLayout.addView(tbr);
                 }
 
@@ -161,27 +220,27 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
             }
 
 
-
         }
 
 
-        Button navBtn= new Button(this);
-        navBtn.setText("Continue");
-        //navBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+        Button navBtn = new Button(this);
+        navBtn.setText("Navigation");
+        navBtn.setBackgroundResource(R.drawable.roundedbutton);
+        navBtn.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         navBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                for( Map.Entry<Integer, List<RadioButton>> entry : mapGroupRadio.entrySet() ){
+                for (Map.Entry<Integer, List<RadioButton>> entry : mapGroupRadio.entrySet()) {
 
                     int templateId = entry.getKey();
                     int storeId = 0;
-                    for( RadioButton rb : entry.getValue() ){
-                        if( rb.isChecked() ){
-                            storeId = Integer.parseInt( String.valueOf(rb.getId()).substring( String.valueOf(rb.getId()).lastIndexOf("00") ) );
+                    for (RadioButton rb : entry.getValue()) {
+                        if (rb.isChecked()) {
+                            storeId = Integer.parseInt(String.valueOf(rb.getId()).substring(String.valueOf(rb.getId()).lastIndexOf("00")));
                             //storeId = rb.getId()%10;
                             listStores.add(storeId);
-                            System.out.println(" Chosen store  : " + templateId +  " -- " + storeId );
+                            System.out.println(" Chosen store  : " + templateId + " -- " + storeId);
                             break;
                         }
 
@@ -190,8 +249,8 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
                 System.out.println("----------------------------------------");
                 System.out.println("Addresses to go to.");
-                for( Integer i : listStores ){
-                    System.out.println(  mapStores.get(i).getAddress().getLatitude() + "," + mapStores.get(i).getAddress().getLongitude()  );
+                for (Integer i : listStores) {
+                    System.out.println(mapStores.get(i).getAddress().getLatitude() + "," + mapStores.get(i).getAddress().getLongitude());
                 }
             }
         });
@@ -212,41 +271,42 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
             obj = new JSONArray(response);
             Log.d("My App", obj.toString());
 
-            listTemplate = new Gson().fromJson(response, new TypeToken<List<TemplateVo>>(){}.getType());
+            listTemplate = new Gson().fromJson(response, new TypeToken<List<TemplateVo>>() {
+            }.getType());
 
-            for( TemplateVo t : listTemplate ){
-                if( null != t.getStores() ){
-                    for( StoreVo storeVo : t.getStores() ){
-                        mapStores.put( storeVo.getStoreId(), storeVo );
+            for (TemplateVo t : listTemplate) {
+                if (null != t.getStores()) {
+                    for (StoreVo storeVo : t.getStores()) {
+                        mapStores.put(storeVo.getStoreId(), storeVo);
                     }
                 }
             }
-            System.out.println( " Kandarp " + listTemplate.size() ) ;
+            System.out.println(" Kandarp " + listTemplate.size());
 
         } catch (Throwable t) {
             Log.e("My App", "Could not parse malformed JSON");
         }
 
         // Populating tables
-        initTable( listTemplate );
+        initTable(listTemplate);
 
     }
 
     public void mapview(View view) {
 
 
-           // ArrayList from = (ArrayList) listValue.get(3);
-            //ArrayList toLoctn = (ArrayList) listValue.get(4);
+        // ArrayList from = (ArrayList) listValue.get(3);
+        //ArrayList toLoctn = (ArrayList) listValue.get(4);
 
 
-            String uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + 37.345185 + "," + -121.936453 + "&daddr=" + 37.33819 + "," + -121.884142 + "&daddr=" + 37.33868 + "," + -121.904431;
-            System.out.println(uri);
-            //System.out.println(from.get(0).getClass().getName());
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            i.setClassName("com.google.android.apps.maps",
-                    "com.google.android.maps.MapsActivity");
-            startActivity(i);
-        }
+        String uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + 37.345185 + "," + -121.936453 + "&daddr=" + 37.33819 + "," + -121.884142 + "&daddr=" + 37.33868 + "," + -121.904431;
+        System.out.println(uri);
+        //System.out.println(from.get(0).getClass().getName());
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        i.setClassName("com.google.android.apps.maps",
+                "com.google.android.maps.MapsActivity");
+        startActivity(i);
+    }
 
 //    @Override
 //    public void onStart() {
