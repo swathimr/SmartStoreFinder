@@ -124,6 +124,7 @@ public class TemplateActivity extends AppCompatActivity {
         getCurrentLocation();
 
         StringBuffer url = new StringBuffer("http://54.191.223.255:8080/template/getStores?items=");
+        //StringBuffer url = new StringBuffer("http://localhost:8080/template/getStores?items=");
         url.append(sb.toString());
         url.append("&lat=");
         url.append("" + location.getLatitude());
