@@ -1,16 +1,17 @@
 package org.smartstore.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.smartstore.dao.StoreDao;
 import org.smartstore.dao.StoreTemplateDao;
 import org.smartstore.dao.TemplateDao;
+import org.smartstore.helper.GoogleTravelTimeCalculator;
+import org.smartstore.helper.TravelTimeCalculator;
 import org.smartstore.model.Product;
-import org.smartstore.model.Store;
 import org.smartstore.model.StoreTemplate;
 import org.smartstore.model.Template;
 import org.smartstore.vo.ProductVo;
@@ -22,20 +23,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.google.maps.DistanceMatrixApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixRow;
+import com.google.maps.model.LatLng;
+import com.google.maps.model.TravelMode;
 
 @RestController
 public class TemplateController {
 
 	@Autowired
 	private TemplateDao templateDao;
-	
+
 	@Autowired
 	private StoreDao storeDao;
-	
+
 	@Autowired
 	private StoreTemplateDao storeTemplateDao;
 
@@ -63,34 +69,38 @@ public class TemplateController {
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/template/getStores", method = RequestMethod.GET)
 	public ResponseEntity<List<TemplateVo>> getAvailableStores(
-			@RequestParam(value = "lat", required = true) Double latitude,
-			@RequestParam(value = "long", required = true) Double longitude,
-			@RequestParam(value = "items", required = true) String templateItems
-			) {
-		
-		System.out.println( "items " + templateItems );
+			@RequestParam(value = "lat", required = true) String latitude,
+			@RequestParam(value = "long", required = true) String longitude,
+			@RequestParam(value = "items", required = true) String templateItems) {
+
+		System.out.println("items " + templateItems);
+		System.out.println("lat " + latitude);
+		System.out.println("lat " + longitude);
 		List<TemplateVo> listTemplateVo = new ArrayList<>();
+		
+		TravelTimeCalculator travelTimeCalculator = new GoogleTravelTimeCalculator();
+		
 		try {
 			listTemplateVo = new ArrayList<>();
-			if( -1 != templateItems.indexOf(",") ){
-				
-				for( String templateId : templateItems.split(",") ){
-					
+			if (-1 != templateItems.indexOf(",")) {
+
+				for (String templateId : templateItems.split(",")) {
+
 					System.out.println("---------------");
-					System.out.println("Template Id " + templateId );
-					
-					Template t = templateDao.findOne( Long.parseLong(templateId));
-					
+					System.out.println("Template Id " + templateId);
+
+					Template t = templateDao.findOne(Long.parseLong(templateId));
+
 					List<StoreTemplate> lst = storeTemplateDao.findStoreTemplates(t);
-					System.out.println("findStoreTemplates Size " + lst.size() );
-					
+					System.out.println("findStoreTemplates Size " + lst.size());
+
 					TemplateVo templateVo = new TemplateVo();
 					List<StoreVo> listStoresForStoreVo = new ArrayList<>();
-					for( StoreTemplate st : lst ){
-						
+					for (StoreTemplate st : lst) {
+
 						StoreVo sVo = new StoreVo();
 						sVo.setStoreId(st.getStore().getStoreId());
 						sVo.setStoreName(st.getStore().getStoreName());
@@ -98,27 +108,31 @@ public class TemplateController {
 						sVo.setAddress(st.getStore().getAddress());
 						sVo.setListIotDevices(st.getStore().getListIotDevices());
 						sVo.setOrder(st.getStore().getOrder());
-						sVo.setListProducts( this.getProductVoList( t.getName(), st.getStore().getListProducts() ));
-						
+						sVo.setListProducts(this.getProductVoList(t.getName(), st.getStore().getListProducts()));
+						sVo.setTravelTime(travelTimeCalculator.getTravelTime(latitude, longitude, sVo.getAddress().getLatitude(),
+								sVo.getAddress().getLongitude()));
+
 						listStoresForStoreVo.add(sVo);
 					}
-					System.out.println("Stores Added for this template id Size " + listStoresForStoreVo.size() );
+					System.out.println("Stores Added for this template id Size " + listStoresForStoreVo.size());
 					templateVo.setTemplateId(t.getTemplateId());
 					templateVo.setName(t.getName());
-					templateVo.setStores(listStoresForStoreVo);
+
+					// Sort
+					templateVo.setStores(this.sortStoresOnTimeAndPrice(listStoresForStoreVo));
 					listTemplateVo.add(templateVo);
-					
+
 					System.out.println("---------------");
 				}
-			}else{
-				
-				Template t = templateDao.findOne( Long.parseLong(templateItems));
+			} else {
+
+				Template t = templateDao.findOne(Long.parseLong(templateItems));
 				List<StoreTemplate> lst = storeTemplateDao.findStoreTemplates(t);
-				
+
 				TemplateVo templateVo = new TemplateVo();
 				List<StoreVo> listStoresForStoreVo = new ArrayList<>();
-				for( StoreTemplate st : lst ){
-					
+				for (StoreTemplate st : lst) {
+
 					StoreVo sVo = new StoreVo();
 					sVo.setStoreId(st.getStore().getStoreId());
 					sVo.setStoreName(st.getStore().getStoreName());
@@ -126,92 +140,77 @@ public class TemplateController {
 					sVo.setAddress(st.getStore().getAddress());
 					sVo.setListIotDevices(st.getStore().getListIotDevices());
 					sVo.setOrder(st.getStore().getOrder());
-					sVo.setListProducts( this.getProductVoList( t.getName(), st.getStore().getListProducts() ));
-					
+					sVo.setListProducts(this.getProductVoList(t.getName(), st.getStore().getListProducts()));
+					sVo.setTravelTime(travelTimeCalculator.getTravelTime(latitude, longitude, sVo.getAddress().getLatitude(),
+							sVo.getAddress().getLongitude()));
+
 					listStoresForStoreVo.add(sVo);
 				}
-				
+
 				templateVo.setTemplateId(t.getTemplateId());
 				templateVo.setName(t.getName());
-				templateVo.setStores(listStoresForStoreVo);
+
+				// Sort
+				templateVo.setStores(this.sortStoresOnTimeAndPrice(listStoresForStoreVo));
+
 				listTemplateVo.add(templateVo);
-				
+
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.toString());
 			return new ResponseEntity<List<TemplateVo>>(HttpStatus.BAD_REQUEST);
 		}
-		System.out.println( " At the end Size " + listTemplateVo.size() );
+		System.out.println(" At the end Size " + listTemplateVo.size());
 		return new ResponseEntity<List<TemplateVo>>(listTemplateVo, HttpStatus.OK);
 	}
+
 	
-	/*private List<Store> getListOfStores( Template template, Double lat, Double longi){
-		
-		
-		
-		System.out.println( " Template id " + template.getTemplateId() + " Template Store size " + template.getStores().size());
-		
-		List<Store> stores = new ArrayList<>();
-		
-		//System.out.println(" Lat " + lat + " longi " + longi );
-		
-		ListIterator<Store> itrS = template.getStores().listIterator();
-		while( itrS.hasNext() ){
-			
-			Store s = itrS.next();
-			System.out.println( " Store got in itrs " + s.getStoreName() );
-			System.out.println( " Store Products Size " + s.getListProducts().size() );
-			if( null != s.getListProducts() ){
-				
-				ListIterator<Product> itr = s.getListProducts().listIterator();
-				
-				while( itr.hasNext() ){
-					Product p = itr.next();
-					if( !p.getProductName().equalsIgnoreCase(template.getName()) ){
-						itr.remove();
-					}
-				}
+	private List<StoreVo> sortStoresOnTimeAndPrice(List<StoreVo> list) {
+
+		Collections.sort(list, new Comparator<StoreVo>() {
+
+			@Override
+			public int compare(StoreVo s1, StoreVo s2) {
+
+				if (s1.getTravelTime() > s2.getTravelTime())
+					return 1;
+				else if (s1.getTravelTime() < s2.getTravelTime())
+					return -1;
+				return 0;
 			}
-			
-			if( s.getListProducts() == null || s.getListProducts().isEmpty() ){
-				System.out.println( " Removing whole storee " + s.getStoreName() );
-				itrS.remove();
-			}else{
-				System.out.println( " Adding storee " + s.getStoreName() );
-				stores.add(s);
-			}
-		}
-		
-		System.out.println( "--------------------Stores List Size getListOfStores " + stores.size() );
-		return stores;
+		});
+
+		return list;
 	}
-*/	
-	private Double getDistance( Double lat1, Double long1, Double lat2, Double long2 ){
-		Double dlon = long2 - long1; 
-		Double dlat = lat2 - lat1;
-		Double a = ( Math.pow(Math.sin(dlat/2),2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2),2) ); 
-		Double c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) ); 
-		// Miles 3961 // kms 6373 
-		return 3961 * c;
-	}
-	
-	private List<ProductVo> getProductVoList( String name, List<Product> list ){
-		
+
+	private List<ProductVo> getProductVoList(String name, List<Product> list) {
+
 		List<ProductVo> lst = new ArrayList<>();
-		if( null != list && !list.isEmpty() ){
-			for( Product p : list ){
-				
+		if (null != list && !list.isEmpty()) {
+			for (Product p : list) {
+
 				ProductVo pVo = new ProductVo();
 				pVo.setProductId(p.getProductId());
 				pVo.setProductName(p.getProductName());
 				pVo.setProductDesc(p.getProductDesc());
 				pVo.setCost(p.getCost());
 				pVo.setQuantity(p.getQuantity());
-				
-				if( name.equalsIgnoreCase( pVo.getProductName() ))
+
+				if (name.equalsIgnoreCase(pVo.getProductName()) && p.getQuantity() > 0)
 					lst.add(pVo);
 			}
 		}
 		return lst;
 	}
+
+	private Double getDistance(Double lat1, Double long1, Double lat2, Double long2) {
+		Double dlon = long2 - long1;
+		Double dlat = lat2 - lat1;
+		Double a = (Math.pow(Math.sin(dlat / 2), 2)
+				+ Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2));
+		Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		// Miles 3961 // kms 6373
+		return 3961 * c;
+	}
+
 }

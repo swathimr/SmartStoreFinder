@@ -41,8 +41,6 @@ public class ProdRecommendtnAsynTask extends AsyncTask<ArrayList<String>,Void,Ar
 
             String result=restTemplate.getForObject(urlVal, String.class, para);
             JSONObject jsonResult=new JSONObject(result);
-            Object types=jsonResult.get("Food Type:");
-            String foodType="";
 
             list.add(jsonResult.get("Food Type:").toString());
             list.add("this is deals and she is not sending");

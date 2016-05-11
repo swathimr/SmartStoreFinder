@@ -135,9 +135,9 @@ public class TemplateActivity extends AppCompatActivity {
         StringBuffer url = new StringBuffer( "http://54.191.223.255:8080/template/getStores?items=" );
         url.append(sb.toString());
         url.append("&lat=");
-        url.append(1);
+        url.append(37.3357190);
         url.append("&long=");
-        url.append(2);
+        url.append(-121.8867080);
 
         System.out.println("URL hitting is " + url.toString() );
 

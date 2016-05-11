@@ -27,7 +27,8 @@ public class RecommendationManager {
     private static final int SEARCH_LIMIT = 3;
     private static final String SEARCH_PATH = "/v2/search";
     private static final String BUSINESS_PATH = "/v2/business";
-
+    private static final String DEFAULT_DEAL = "You get free coupons on the purchase of 15$. For more information, visit the given the url";
+    private static final String DEFAULT_URL = "www.yelp.com/biz/{shopname?utm_campaign=yelp_api&utm_medium=api_v2_business";
     /*
      * OAuth credentials below from the Yelp Developers API site:
      * http://www.yelp.com/developers/getting_started/api_access
@@ -147,14 +148,15 @@ public class RecommendationManager {
         String[] parts = add.split(",");
 
         String businessID = "";
+        String storeName = "";
 
         for(int i =0;i<length;i++) {
             JSONObject obj = (JSONObject) businesses.get(i);
-            String name = obj.get("name").toString();
+            storeName = obj.get("name").toString();
             JSONObject address = (JSONObject) obj.get("location");
             String d = address.get("display_address").toString();
 
-            if(d.contains(parts[0]) && d.contains(parts[parts.length-2]))
+            if(d.contains(parts[0]) && (d.contains(parts[parts.length-2]) || d.contains(parts[parts.length-1])))
             {
                 System.out.println("Matched: " + d);
                 businessID = obj.get("id").toString();
@@ -224,6 +226,7 @@ public class RecommendationManager {
                     }
                 }
             }
+            Boolean isDealAvailable = false;
             if(response1.get("deals")!=null){
                 JSONArray deals = (JSONArray)response1.get("deals");
                 if(deals!=null) {
@@ -241,11 +244,28 @@ public class RecommendationManager {
                             }
                         }
                         deal += "with the given link";
+                        isDealAvailable = true;
                         result.put("Available DEAL: ",deal);
                         result.put("DEAL Details:",obj.get("url").toString());
                         System.out.println(deals.get(i).toString());
                     }
                 }
+            }
+            if(!isDealAvailable)
+            {
+                result.put("Available DEAL: ",DEFAULT_DEAL);
+                String deal_url = DEFAULT_URL;
+                for(int i =0;i<deal_url.length();i++)
+                {
+                    if(deal_url.charAt(i) == '{' && deal_url.charAt(i+1) == 's') {
+                        String leftPart = deal_url.substring(i + 9, deal_url.length());
+                        String frontPart = deal_url.substring(0,i);
+                        deal_url = frontPart + businessID + leftPart;
+                        break;
+                    }
+                }
+                System.out.println(deal_url);
+                result.put("DEAL Details:",deal_url);
             }
 
         } catch (ParseException pe) {
@@ -255,6 +275,7 @@ public class RecommendationManager {
         }
 
         System.out.println(response1);
+
         return result;
     }
     /**

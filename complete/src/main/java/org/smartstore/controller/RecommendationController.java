@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.smartstore.helper.RecommendationManager.queryAPI;
@@ -51,8 +50,8 @@ public class RecommendationController {
         //yelpApiCli.location = location;
        // yelpApiCli.term = term;
 
-        System.out.println(loctn);
-        System.out.println(name);
+        //System.out.println(loctn);
+        //System.out.println(name);
         yelpApiCli.location = loctn;
         yelpApiCli.term = name;
 
