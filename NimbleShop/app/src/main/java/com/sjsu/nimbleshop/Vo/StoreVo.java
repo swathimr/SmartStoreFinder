@@ -3,78 +3,94 @@ package com.sjsu.nimbleshop.Vo;
 import java.util.List;
 
 
+public class StoreVo implements java.io.Serializable {
 
 
+    private int storeId;
+    private String storeName;
+    private String storeDesc;
+    private Address address;
+    private List<ProductVo> listProducts;
+    private List<IotDevice> listIotDevices;
+    private Order order;
+    private Long travelTime;
 
-public class StoreVo implements java.io.Serializable{
+    private Long waitTime;
 
-	
-	private int storeId;
-	private String storeName;
-	private String storeDesc;
-	private Address address;
-	private List<ProductVo> listProducts;
-	private List<IotDevice> listIotDevices;
-	private Order order;
-	
-	public StoreVo(){}
+    public Long getWaitTime() {
+        return waitTime;
+    }
 
-	public int getStoreId() {
-		return storeId;
-	}
+    public void setWaitTime(Long waitTime) {
+        this.waitTime = waitTime;
+    }
 
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
-	}
+    public StoreVo() {
+    }
 
-	public String getStoreName() {
-		return storeName;
-	}
+    public int getStoreId() {
+        return storeId;
+    }
 
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
-	}
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
+    }
 
-	public String getStoreDesc() {
-		return storeDesc;
-	}
+    public String getStoreName() {
+        return storeName;
+    }
 
-	public void setStoreDesc(String storeDesc) {
-		this.storeDesc = storeDesc;
-	}
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
 
-	public Address getAddress() {
-		return address;
-	}
+    public String getStoreDesc() {
+        return storeDesc;
+    }
 
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+    public void setStoreDesc(String storeDesc) {
+        this.storeDesc = storeDesc;
+    }
 
-	public List<ProductVo> getListProducts() {
-		return listProducts;
-	}
+    public Address getAddress() {
+        return address;
+    }
 
-	public void setListProducts(List<ProductVo> listProducts) {
-		this.listProducts = listProducts;
-	}
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
-	public List<IotDevice> getListIotDevices() {
-		return listIotDevices;
-	}
+    public List<ProductVo> getListProducts() {
+        return listProducts;
+    }
 
-	public void setListIotDevices(List<IotDevice> listIotDevices) {
-		this.listIotDevices = listIotDevices;
-	}
+    public void setListProducts(List<ProductVo> listProducts) {
+        this.listProducts = listProducts;
+    }
 
-	public Order getOrder() {
-		return order;
-	}
+    public List<IotDevice> getListIotDevices() {
+        return listIotDevices;
+    }
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
-	
-	
+    public void setListIotDevices(List<IotDevice> listIotDevices) {
+        this.listIotDevices = listIotDevices;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Long getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(Long travelTime) {
+        this.travelTime = travelTime;
+    }
+
 
 }

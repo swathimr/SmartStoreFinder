@@ -30,21 +30,14 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         shopName=(TextView)findViewById(R.id.shopNameID);
         address=(TextView)findViewById(R.id.shopAddressID);
         product=(TextView)findViewById(R.id.ProdRecoID);
         rating=(RatingBar)findViewById(R.id.ratingBar);
         reviews=(TextView)findViewById(R.id.ProdReviewID);
-        viewMoreLink=(TextView)findViewById(R.id.textView6);
+        viewMoreLink=(TextView)findViewById(R.id.viewmorelink);
         try {
             ArrayList<String> list=new ArrayList<>();
             String shopNameVal=getIntent().getExtras().get("shopname").toString();
@@ -57,14 +50,12 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
                 address.setText(addressVal);
                 String hs=result.get(0).replace("[", "").replace(']', ' ');
                 product.setText(hs + "\n" + result.get(1));
-                //rating.setLayoutParams(new TableRow.LayoutParams(50, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                 rating.setNumStars(5);
                 rating.setMax(5);
                 rating.setStepSize(1);
-
-                //rating.setPadding(0, 50, 100, 0);
                 rating.setRating(Float.valueOf(result.get(2)));
                 reviews.setText(result.get(3));
+
                 viewMoreLink.setText("View More At : "+result.get(4));
 
         } catch(Exception e) {

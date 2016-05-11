@@ -1,5 +1,6 @@
 package com.sjsu.nimbleshop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -10,9 +11,11 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -49,6 +52,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     private static final String LOG_TAG = "MainActivity";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
+    private TextView headerView;
     private TextView mNameTextView;
     private TextView mAddressTextView;
     private TextView mIdTextView;
@@ -69,8 +73,14 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         info = (TextView)findViewById(R.id.info);
-        info.setText("Loggedin successfully");
+        //info.setText("Loggedin successfully");
 
         //gets current location
         getCurrentLocation();
@@ -87,6 +97,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
                 .autoCompleteTextView);
         mAutocompleteTextView.setThreshold(3);
         mNameTextView = (TextView) findViewById(R.id.name);
+        headerView=(TextView) findViewById(R.id.header);
         mAddressTextView = (TextView) findViewById(R.id.address);
         mIdTextView = (TextView) findViewById(R.id.place_id);
         mPhoneTextView = (TextView) findViewById(R.id.phone);
@@ -160,6 +171,8 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
             final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
             final String placeId = String.valueOf(item.placeId);
             selectedPlace=position;
@@ -178,6 +191,9 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
                         .getPlaceById(mGoogleApiClient, placeIdVal);
                 placeResults.setResultCallback(mfetchPlaceDetailsCallback);
             }
+
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     };
 
@@ -193,6 +209,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             // Selecting the first object buffer.
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
+            headerView.setVisibility(View.VISIBLE);
             mNameTextView.setText(Html.fromHtml(place.getName() + ""));
             mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
             mIdTextView.setText(Html.fromHtml(place.getId() + ""));
@@ -201,6 +218,9 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             if (attributions != null) {
                 mAttTextView.setText(Html.fromHtml(attributions.toString()));
             }
+
+            InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(mAttTextView.getWindowToken(), 0);
         }
     };
 

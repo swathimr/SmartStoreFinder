@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="storeId")
 public class StoreVo implements java.io.Serializable{
 
-	
 	private long storeId;
 	private String storeName;
 	private String storeDesc;
@@ -21,6 +20,18 @@ public class StoreVo implements java.io.Serializable{
 	private List<ProductVo> listProducts;
 	private List<IotDevice> listIotDevices;
 	private Order order;
+	private Long travelTime;
+	private Long waitTime;
+	
+	public Long getWaitTime() {
+		return waitTime;
+	}
+
+	public void setWaitTime(Long waitTime) {
+		this.waitTime = waitTime;
+	}
+	
+	
 	
 	public StoreVo(){}
 
@@ -78,6 +89,14 @@ public class StoreVo implements java.io.Serializable{
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	public Long getTravelTime() {
+		return travelTime;
+	}
+
+	public void setTravelTime(Long travelTime) {
+		this.travelTime = travelTime;
 	}
 	
 	

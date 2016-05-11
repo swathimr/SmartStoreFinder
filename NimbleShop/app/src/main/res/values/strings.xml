@@ -3,10 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">972472256122146</string>
     <string name="button_text">Login / Sign Up</string>
-    <string name="title_activity_landing">LandingActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_landing">Search </string>
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_search">Map</string>
-    <string name="title_activity_wait_list_prediction">WaitListPredictionActivity</string>
+    <string name="title_activity_wait_list_prediction">List Of Stores</string>
     <string name="title_activity_template">TemplateActivity</string>
     <string name="Groceries">Groceries</string>
     <string name="Milk">Milk</string>
@@ -21,8 +21,10 @@
     <string name="getWaitTimesTemplate">Get Wait Times</string>
     <string name="navigation">Get Locations</string>
 
-    <string name="title_activity_wait_list_prediction_template">WaitListPredictionTemplateActivity
+    <string name="title_activity_wait_list_prediction_template">WaitListPredictionTemplate
     </string>
-    <string name="title_activity_prodrecmndtn">ProdrecmndtnActivity</string>
+    <string name="title_activity_prodrecmndtn">Product Recommendation</string>
+    <string name="title_activity_location_marker">locationMarker</string>
+    <string name="title_activity_location_template">LocationTemplate</string>
 
 </resources>

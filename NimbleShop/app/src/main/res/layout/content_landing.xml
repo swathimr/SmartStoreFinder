@@ -12,21 +12,21 @@
     tools:context="com.sjsu.nimbleshop.LandingActivity"
     tools:showIn="@layout/activity_landing">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/info"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textSize="18sp"
-        />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/info"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:textSize="18sp"-->
+        <!--/>-->
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:hint="Enter Place Here"/>
 
     <Button
@@ -37,7 +37,7 @@
         android:minWidth="150dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/autoCompleteTextView"
-        android:text="Get Waiting Time"
+        android:text="Search"
         android:background = "@drawable/roundedbutton"
         android:onClick="getWaitingTimePredictions" />
 
@@ -50,7 +50,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="160dp"
         android:layout_below="@+id/autoCompleteTextView"
-        android:text="Templates"
+        android:text="from Templates"
         android:background = "@drawable/roundedbutton"
         android:onClick="getTemplateActivity" />
 
@@ -63,6 +63,7 @@
         android:layout_below="@+id/prefbtn"
         android:layout_marginTop="20dp"
         android:text="Selected Place:"
+        android:visibility="invisible"
         android:textStyle="bold"/>
 
     <TextView
@@ -123,7 +124,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="320dp"
         android:layout_above="@+id/latlongLocation"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
