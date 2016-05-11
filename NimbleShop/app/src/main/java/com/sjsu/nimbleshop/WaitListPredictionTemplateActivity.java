@@ -38,6 +38,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -258,11 +260,30 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                     }
                 }
 
+                List<StoreVo> list = new ArrayList<StoreVo>();
+
                 System.out.println("----------------------------------------");
                 System.out.println("Addresses to go to.");
                 for (Integer i : listStores) {
+                    list.add( mapStores.get(i) );
                     System.out.println(mapStores.get(i).getAddress().getLatitude() + "," + mapStores.get(i).getAddress().getLongitude());
-                    locations.add(new LatLng(mapStores.get(i).getAddress().getLatitude(), mapStores.get(i).getAddress().getLongitude()));
+                    //locations.add(new LatLng(mapStores.get(i).getAddress().getLatitude(), mapStores.get(i).getAddress().getLongitude()));
+                }
+
+                // Sorting of Stores
+                Collections.sort(list, new Comparator<StoreVo>() {
+                    @Override
+                    public int compare(StoreVo lhs, StoreVo rhs) {
+                        if( lhs.getTravelTime() > rhs.getTravelTime() )
+                            return 1;
+                        else if( lhs.getTravelTime() < rhs.getTravelTime() )
+                            return -1;
+                        return 0;
+                    }
+                });
+
+                for( StoreVo storeVo : list ){
+                    locations.add(new LatLng(storeVo.getAddress().getLatitude(), storeVo.getAddress().getLongitude()));
                 }
 
                 gotoTemplate(locations);

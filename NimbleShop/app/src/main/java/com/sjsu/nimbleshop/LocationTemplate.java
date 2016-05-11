@@ -97,9 +97,12 @@ public class LocationTemplate extends AppCompatActivity {
             getCurrentLocation();
             // Drawing marker on the map
             locations.add(0,new LatLng(location.getLatitude(), location.getLongitude()));
+            int i = 0;
             for(LatLng location : locations){
                 drawMarker(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))),10));
+                if( i == 0)
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))),10));
+                i++;
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                // mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
             }
