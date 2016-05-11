@@ -24,36 +24,69 @@ public class IoTScheduleController {
     public static int prevCount;
     public static Integer lastWaitTime;
     int i=1;
+    int customCount =3;
 
     //@Scheduled(fixedRate =30000)
-    @Scheduled(fixedRate=60000)
+    @Scheduled(fixedRate=30000)
     public void reportCurrentTime() {
 
         System.out.println("The time is now " + dateFormat.format(new Date()));
         RestTemplate restTemplate = new RestTemplate();
-        /*ResponseEntity<String> response = restTemplate.getForEntity("http://192.168.1.13:5000/getPeople/api/v1.0/count",String.class);
-        System.out.println(response);
-        JSONObject json=new JSONObject(response.getBody());
-        int count=Integer.valueOf(json.get("count").toString());*/
-        //for testing
-        int count=1;
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity("http://192.168.1.13:5000/getPeople/api/v1.0/count", String.class);
 
-        //starting time for first time
-        if(count>0 && i==1)
-        {
-            System.out.println("started time");
-            startTime = System.currentTimeMillis();
-            prevCount=count;
-            i=0;
+            System.out.println(response.getStatusCode());
+            JSONObject json = new JSONObject(response.getBody());
+            int count = Integer.valueOf(json.get("count").toString());
             //for testing
-            prevCount=2;
+            //int count=1;
+
+            //starting time for first time
+            if (count > 0 && i == 1) {
+                System.out.println("started time");
+                startTime = System.currentTimeMillis();
+                prevCount = count;
+                i = 0;
+                //for testing
+                // prevCount=2;
+            } else {
+                System.out.println("Resetted time dont worry");
+                WaitTimeHandler waitHndlr = new WaitTimeHandler();
+                WaitTimeController.waitTime = waitHndlr.calculateWaitTime(count, startTime);
+                System.out.println(WaitTimeController.waitTime);
+            }
         }
-        else
+        catch(Exception excep)
         {
-            System.out.println("Resetted time dont worry");
-            WaitTimeHandler waitHndlr=new WaitTimeHandler();
-            WaitTimeController.waitTime=waitHndlr.calculateWaitTime(count,startTime);
+            customHandler();
+        }
+        finally {
             System.out.println(WaitTimeController.waitTime);
+        }
+    }
+
+    // if pi is not runing
+    private void customHandler() {
+
+        int customDefaultTime=40;
+        if(customCount==3)
+        {
+           WaitTimeController.waitTime=3*40;
+
+            customCount=customCount-1;
+        }
+        else if(customCount==2)
+        {
+            WaitTimeController.waitTime=2*40;
+            customCount=customCount-1;
+        }
+        else if(customCount==1){
+            WaitTimeController.waitTime=1*40;
+            customCount=customCount-1;
+        }
+        else{
+            WaitTimeController.waitTime=0;
+            customCount=3;
         }
     }
 }
