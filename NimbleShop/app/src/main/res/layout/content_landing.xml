@@ -63,6 +63,7 @@
         android:layout_below="@+id/prefbtn"
         android:layout_marginTop="20dp"
         android:text="Selected Place:"
+        android:visibility="invisible"
         android:textStyle="bold"/>
 
     <TextView

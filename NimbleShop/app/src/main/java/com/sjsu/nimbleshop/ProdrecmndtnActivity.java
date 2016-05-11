@@ -37,7 +37,7 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
         product=(TextView)findViewById(R.id.ProdRecoID);
         rating=(RatingBar)findViewById(R.id.ratingBar);
         reviews=(TextView)findViewById(R.id.ProdReviewID);
-        viewMoreLink=(TextView)findViewById(R.id.textView6);
+        viewMoreLink=(TextView)findViewById(R.id.viewmorelink);
         try {
             ArrayList<String> list=new ArrayList<>();
             String shopNameVal=getIntent().getExtras().get("shopname").toString();

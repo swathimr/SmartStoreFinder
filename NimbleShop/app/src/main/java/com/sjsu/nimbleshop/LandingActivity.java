@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     private static final String LOG_TAG = "MainActivity";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private AutoCompleteTextView mAutocompleteTextView;
+    private TextView headerView;
     private TextView mNameTextView;
     private TextView mAddressTextView;
     private TextView mIdTextView;
@@ -71,6 +73,12 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         info = (TextView)findViewById(R.id.info);
         //info.setText("Loggedin successfully");
 
@@ -89,6 +97,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
                 .autoCompleteTextView);
         mAutocompleteTextView.setThreshold(3);
         mNameTextView = (TextView) findViewById(R.id.name);
+        headerView=(TextView) findViewById(R.id.header);
         mAddressTextView = (TextView) findViewById(R.id.address);
         mIdTextView = (TextView) findViewById(R.id.place_id);
         mPhoneTextView = (TextView) findViewById(R.id.phone);
@@ -200,6 +209,7 @@ public class LandingActivity extends AppCompatActivity implements LocationListen
             // Selecting the first object buffer.
             final Place place = places.get(0);
             CharSequence attributions = places.getAttributions();
+            headerView.setVisibility(View.VISIBLE);
             mNameTextView.setText(Html.fromHtml(place.getName() + ""));
             mAddressTextView.setText(Html.fromHtml(place.getAddress() + ""));
             mIdTextView.setText(Html.fromHtml(place.getId() + ""));

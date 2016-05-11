@@ -20,7 +20,7 @@
         android:textColor="@color/com_facebook_blue"
         android:id="@+id/title"
         android:layout_centerHorizontal="true"
-        android:text="Prod Recommendation and Deals"
+        android:text="Product Recommendation and Deals"
         android:textStyle="bold"
         />
 
@@ -259,9 +259,19 @@
             android:textSize="18sp"
             android:paddingRight="5dip"
             android:padding="5dp"
-
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <TextView
+            android:id="@+id/viewmorelink"
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:textStyle="italic"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/textView6"
+            android:autoLink="web"
+            android:paddingRight="5dip"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </TableLayout>
 

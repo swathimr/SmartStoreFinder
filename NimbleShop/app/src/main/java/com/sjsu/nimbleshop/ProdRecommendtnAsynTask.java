@@ -42,11 +42,11 @@ public class ProdRecommendtnAsynTask extends AsyncTask<ArrayList<String>,Void,Ar
             String result=restTemplate.getForObject(urlVal, String.class, para);
             JSONObject jsonResult=new JSONObject(result);
 
-            list.add(jsonResult.get("Food Type:").toString());
+            list.add(jsonResult.get("Food Type").toString());
             list.add(jsonResult.get("Deal").toString());
             list.add(jsonResult.get("Rating").toString());
-            list.add(jsonResult.get("Review:").toString());
-            list.add(jsonResult.get("Visit at:").toString());
+            list.add(jsonResult.get("Review").toString());
+            list.add(jsonResult.get("Url").toString());
             //return list;
         }
         catch (Exception e) {
