@@ -189,10 +189,10 @@ public class RecommendationManager {
             }
             System.out.println("Review:" + review);
 
-            result.put("Review:", review);
-            result.put("Visit at:",response1.get("mobile_url").toString());
-            result.put("View Photo at:",response1.get("image_url").toString());
-            result.put("Number of reviews:", response1.get("review_count").toString());
+            result.put("Review", review);
+            result.put("Url",response1.get("mobile_url").toString());
+            result.put("Photo",response1.get("image_url").toString());
+            result.put("Count_Review", response1.get("review_count").toString());
 
 
             System.out.println("Rating:"+ response1.get("rating").toString());
@@ -212,7 +212,7 @@ public class RecommendationManager {
             }
 
             HashSet<String> keyTermsSet = parseFoodTypes(keyTerms);
-            result.put("Food Type:",keyTermsSet);
+            result.put("Food Type",keyTermsSet);
 
             if(response1.get("reviews")!=null)
             {
@@ -245,15 +245,15 @@ public class RecommendationManager {
                         }
                         deal += "with the given link";
                         isDealAvailable = true;
-                        result.put("Available DEAL: ",deal);
-                        result.put("DEAL Details:",obj.get("url").toString());
+                        result.put("Deal",deal);
+                        result.put("DealUrl",obj.get("url").toString());
                         System.out.println(deals.get(i).toString());
                     }
                 }
             }
             if(!isDealAvailable)
             {
-                result.put("Available DEAL: ",DEFAULT_DEAL);
+                result.put("Deal",DEFAULT_DEAL);
                 String deal_url = DEFAULT_URL;
                 for(int i =0;i<deal_url.length();i++)
                 {
@@ -265,7 +265,7 @@ public class RecommendationManager {
                     }
                 }
                 System.out.println(deal_url);
-                result.put("DEAL Details:",deal_url);
+                result.put("DealUrl",deal_url);
             }
 
         } catch (ParseException pe) {
