@@ -16,8 +16,9 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_above="@+id/latlongLocation"
-    class="com.google.android.gms.maps.SupportMapFragment" />
+    class="com.google.android.gms.maps.SupportMapFragment"
+    android:layout_alignBottom="@+id/getWaitTimesTemplate"
+    android:layout_marginBottom="50sp" />
 
 
     <Button
@@ -26,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:minWidth="150dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="440sp"
         android:text="Start Navigation"
         android:background = "@drawable/roundedbutton"
         android:onClick="mapview" />
