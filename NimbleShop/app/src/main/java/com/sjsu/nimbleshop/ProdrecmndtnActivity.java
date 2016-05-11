@@ -55,6 +55,7 @@ public class ProdrecmndtnActivity extends AppCompatActivity {
                 rating.setStepSize(1);
                 rating.setRating(Float.valueOf(result.get(2)));
                 reviews.setText(result.get(3));
+
                 viewMoreLink.setText("View More At : "+result.get(4));
 
         } catch(Exception e) {

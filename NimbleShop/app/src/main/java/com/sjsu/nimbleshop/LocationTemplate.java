@@ -99,8 +99,9 @@ public class LocationTemplate extends AppCompatActivity {
             locations.add(0,new LatLng(location.getLatitude(), location.getLongitude()));
             for(LatLng location : locations){
                 drawMarker(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude)))));
-
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))),10));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+               // mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
             }
 
             addLines(locations);

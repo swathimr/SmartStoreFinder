@@ -43,7 +43,7 @@ public class ProdRecommendtnAsynTask extends AsyncTask<ArrayList<String>,Void,Ar
             JSONObject jsonResult=new JSONObject(result);
 
             list.add(jsonResult.get("Food Type:").toString());
-            list.add("this is deals and she is not sending");
+            list.add(jsonResult.get("Deal").toString());
             list.add(jsonResult.get("Rating").toString());
             list.add(jsonResult.get("Review:").toString());
             list.add(jsonResult.get("Visit at:").toString());
