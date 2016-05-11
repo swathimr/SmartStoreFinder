@@ -120,6 +120,9 @@ public class TemplateController {
 
 					// Sort
 					templateVo.setStores(this.sortStoresOnTimeAndPrice(listStoresForStoreVo));
+					if( null != templateVo.getStores() && null != templateVo.getStores().get(0) )
+						templateVo.getStores().get(0).setWaitTime(new Long(WaitTimeController.waitTime));
+					
 					listTemplateVo.add(templateVo);
 
 					System.out.println("---------------");
@@ -143,6 +146,7 @@ public class TemplateController {
 					sVo.setListProducts(this.getProductVoList(t.getName(), st.getStore().getListProducts()));
 					sVo.setTravelTime(travelTimeCalculator.getTravelTime(latitude, longitude, sVo.getAddress().getLatitude(),
 							sVo.getAddress().getLongitude()));
+					
 
 					listStoresForStoreVo.add(sVo);
 				}
@@ -152,6 +156,9 @@ public class TemplateController {
 
 				// Sort
 				templateVo.setStores(this.sortStoresOnTimeAndPrice(listStoresForStoreVo));
+				
+				if( null != templateVo.getStores() && null != templateVo.getStores().get(0) )
+					templateVo.getStores().get(0).setWaitTime(new Long(WaitTimeController.waitTime));
 
 				listTemplateVo.add(templateVo);
 

@@ -155,13 +155,21 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
                         tbr.addView(tv1);
 
+                        // Wait time
+
                         TextView tv4 = new TextView(this);
-                        tv4.setText(" Wait time ");
+                        tv4.setText("NA");
+                        Long waitTime = new Long(0L);
+                        if( null != storeVo.getWaitTime() && 0 != storeVo.getWaitTime() ){
+                            waitTime = (storeVo.getWaitTime()/60);
+                            String waitTimeStr =  waitTime == 1 ? waitTime.toString()+" min" : waitTime.toString()+ " mins";
+                            tv4.setText(waitTimeStr);
+                        }
                         tbr.addView(tv4);
 
                         // Total time
                         TextView tv5 = new TextView(this);
-                        Long totalTime = (storeVo.getTravelTime()/60);
+                        Long totalTime = waitTime + (storeVo.getTravelTime()/60);
                         String totalTimeValue =  totalTime == 1 ? totalTime.toString()+" min" : totalTime.toString()+ " mins";
                         tv5.setText( totalTimeValue );
                         tbr.addView(tv5);
