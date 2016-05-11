@@ -298,6 +298,7 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LocationTemplate.class);
         intent.putParcelableArrayListExtra("locations", locations);
         startActivity(intent);
+        locations.clear();
     };
 
 

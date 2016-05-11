@@ -60,13 +60,15 @@ public class LocationTemplate extends AppCompatActivity {
         // Do a null check to confirm that we have not already instantiated the map.
         if (googleMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            googleMap = ((SupportMapFragment)getSupportFragmentManager()
+            googleMap = ((SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map)).getMap();
-            // Check if we were successful in obtaining the map.
-            if (googleMap != null)
-                createMarker();
         }
-    }
+            // Check if we were successful in obtaining the map.
+            if (googleMap != null) {
+                createMarker();
+            }
+        }
+
 
 
     @Override
@@ -97,14 +99,14 @@ public class LocationTemplate extends AppCompatActivity {
             getCurrentLocation();
             // Drawing marker on the map
             locations.add(0,new LatLng(location.getLatitude(), location.getLongitude()));
-            int i = 0;
-            for(LatLng location : locations){
-                drawMarker(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))));
-                if( i == 0)
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(String.valueOf(location.latitude)), Double.parseDouble(String.valueOf(location.longitude))),10));
-                i++;
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-               // mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+
+            int k;
+            for(k = 0;k<locations.size();k++){
+                drawMarker(new LatLng(Double.parseDouble(String.valueOf(locations.get(k).latitude)), Double.parseDouble(String.valueOf(locations.get(k).longitude))), k);
+                if( k == 0)
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(String.valueOf(locations.get(k).latitude)), Double.parseDouble(String.valueOf(locations.get(k).longitude))),10));
+
             }
 
             addLines(locations);
@@ -139,16 +141,27 @@ public class LocationTemplate extends AppCompatActivity {
 
     }
 
-    private void drawMarker(LatLng point) {
+    private void drawMarker(LatLng point, int index) {
         // Creating an instance of MarkerOptions
+
+        System.out.println("In Drwamarker");
+        String name="";
+        if(index == 0){name="Your here";}
+        else
+        {
+            name = "Store"+index;
+        }
+
         MarkerOptions markerOptions = new MarkerOptions();
 
         // Setting latitude and longitude for the marker
-        markerOptions.position(point);
+        markerOptions.position(point).title(name);
 
         // Adding marker on the Google Map
         googleMap.addMarker(markerOptions);
+        //markerOptions.title(name);
     }
+
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
