@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sjsu.nimbleshop.Vo.DataWrapper;
@@ -48,6 +49,7 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
 
     ArrayList<Integer> list = new ArrayList<>();
+    ArrayList<LatLng> locations = new ArrayList();
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -153,13 +155,21 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
                         tbr.addView(tv1);
 
+                        // Wait time
+
                         TextView tv4 = new TextView(this);
-                        tv4.setText(" Wait time ");
+                        tv4.setText("NA");
+                        Long waitTime = new Long(0L);
+                        if( null != storeVo.getWaitTime() && 0 != storeVo.getWaitTime() ){
+                            waitTime = (storeVo.getWaitTime()/60);
+                            String waitTimeStr =  waitTime == 1 ? waitTime.toString()+" min" : waitTime.toString()+ " mins";
+                            tv4.setText(waitTimeStr);
+                        }
                         tbr.addView(tv4);
 
                         // Total time
                         TextView tv5 = new TextView(this);
-                        Long totalTime = (storeVo.getTravelTime()/60);
+                        Long totalTime = waitTime + (storeVo.getTravelTime()/60);
                         String totalTimeValue =  totalTime == 1 ? totalTime.toString()+" min" : totalTime.toString()+ " mins";
                         tv5.setText( totalTimeValue );
                         tbr.addView(tv5);
@@ -185,7 +195,6 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
 
                         TableRow tbrQty = new TableRow(this);
                         tbrQty.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-
                         TextView tvEmptyQty = new TextView(this);
                         tvEmptyQty.setText("");
                         tbrQty.addView(tvEmptyQty);
@@ -253,12 +262,23 @@ public class WaitListPredictionTemplateActivity extends AppCompatActivity {
                 System.out.println("Addresses to go to.");
                 for (Integer i : listStores) {
                     System.out.println(mapStores.get(i).getAddress().getLatitude() + "," + mapStores.get(i).getAddress().getLongitude());
+                    locations.add(new LatLng(mapStores.get(i).getAddress().getLatitude(), mapStores.get(i).getAddress().getLongitude()));
                 }
+
+                gotoTemplate(locations);
             }
         });
 
         tableLayout.addView(navBtn);
     }
+
+    public void gotoTemplate(ArrayList<LatLng> locations)
+    {
+        Intent intent = new Intent(this, LocationTemplate.class);
+        intent.putParcelableArrayListExtra("locations", locations);
+        startActivity(intent);
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

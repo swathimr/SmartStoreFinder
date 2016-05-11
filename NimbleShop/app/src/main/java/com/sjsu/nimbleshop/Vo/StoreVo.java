@@ -15,6 +15,16 @@ public class StoreVo implements java.io.Serializable {
     private Order order;
     private Long travelTime;
 
+    private Long waitTime;
+
+    public Long getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(Long waitTime) {
+        this.waitTime = waitTime;
+    }
+
     public StoreVo() {
     }
 
